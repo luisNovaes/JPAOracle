@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Este WSDL é um descritor de um WebService simples 
+que recebe o nome e a idade de um cliente e retorna um número de
+recibo em caso de sucesso.-->
+
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:tns="http://www.mayconoliveira.org/webservices/"   
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="webservices"
+ targetNamespace="http://www.mayconoliveira.org/webservices/">
+    
+<!--A tag documentation nos possibilita a inclusão da nossa documentação, 
+    dispensando um documento auxiliar como um pdf para explicar os objetivos 
+    do Web Service ou para que serve cada campo. Isso não só garante que a 
+    informação fique centralizada, como também facilita a leitura por terceiros.-->    
+ <wsdl:documentation>Prezado fornecedor, este é um Web Service de
+  exemplo, voltado a inclusao de clientes.
+ </wsdl:documentation>
+ 
+ <wsdl:types>
+  <xsd:schema targetNamespace="http://www.mayconoliveira.org/webservices/">
+   <xsd:element name="ClienteRequest">
+    <xsd:complexType>
+        
+     <xsd:sequence>
+       <!--A idade é tipo “int” (inteiro) e o nome é do tipo string.
+         type="xsd:string" type="xsd:int"-->    
+      <xsd:element name="nome" type="xsd:string">
+       <xsd:annotation>
+        <xsd:documentation>
+         Aqui você deve enviar o nome do cliente exatamente como consta em seu RG
+        </xsd:documentation>
+       </xsd:annotation>
+      </xsd:element>
+      <!--a idade do cliente a ser enviada pelo invocador do serviço e o número do 
+      recibo devolvido pelo servidor são opcionais, ou seja, podem não ser informados.
+      Isso pode ser verificado através do atributo minOccurs com o valor 0 
+      (O default, caso não informado, é 1, ou seja, obrigatório). -->
+      <xsd:element name="idade" type="xsd:int" minOccurs="0">
+       <xsd:annotation>
+        <xsd:documentation>
+         Informe a idade do cliente a ser utilizado no
+         email marketing.
+        </xsd:documentation>
+       </xsd:annotation>
+      </xsd:element>
+     </xsd:sequence>
+     
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="ClienteResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="mensagem" type="xsd:string">
+       <xsd:annotation>
+        <xsd:documentation>
+         Mensagem devolvida do Web Service.
+        </xsd:documentation>
+       </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="numeroRecibo" type="xsd:int"
+       minOccurs="0">
+       <xsd:annotation>
+        <xsd:documentation>
+         Recibo da inclusão. Somente é devolvido em
+         caso de sucesso.
+        </xsd:documentation>
+       </xsd:annotation>
+      </xsd:element>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </wsdl:types>
+ 
+ <wsdl:message name="ClienteRequest">
+  <wsdl:part element="tns:ClienteRequest" name="parameters" />
+ </wsdl:message>
+ 
+ <wsdl:message name="ClienteResponse">
+  <wsdl:part element="tns:ClienteResponse" name="parameters" />
+ </wsdl:message>
+ 
+ <wsdl:portType name="webservicesPortType">
+  <wsdl:operation name="incluirCliente">
+   <wsdl:input message="tns:ClienteRequest" />
+   <wsdl:output message="tns:ClienteResponse" />
+  </wsdl:operation>
+ </wsdl:portType>
+ 
+ <wsdl:binding name="webservicesSOAP" type="tns:webservicesPortType">
+  <soap:binding style="document"
+   transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:operation name="incluirCliente">
+   <soap:operation soapAction=
+     "http://www.mayconoliveira.org/webservices/incluirCliente" />
+   <wsdl:input>
+    <soap:body use="literal" />
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ 
+ <!--(Service)Essa sessão especifica qual a localização do serviço através do atributo location. 
+No exemplo o serviço está localizado na URL http://127.0.0.1:9876/calc que é 
+chamado como o endpoint (ponto) do serviço, ou seja, onde o serviço pode ser encontrado. 
+Essa informação é importante para o cliente, pois é neste ponto que ele descobre em 
+que servidor está o serviço.-->
+ <wsdl:service name="webservices">
+  <wsdl:port binding="tns:webservicesSOAP" name="webservicesSOAP">
+   <soap:address location="http://www.mayconoliveira.org/meuwebserviceaqui" />
+  </wsdl:port>
+ </wsdl:service>
+ 
+</wsdl:definitions>

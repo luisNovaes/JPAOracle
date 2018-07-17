@@ -1,0 +1,5 @@
+br\com\webservice\servlet\AdicionaContatoServlet.class
+br\com\webservice\dao\PessoaDAO.class
+br\com\webservice\model\Pessoa.class
+br\com\webservice\model\Pessoa_.class
+br\com\webservice\teste\PessoaDAOTeste.class

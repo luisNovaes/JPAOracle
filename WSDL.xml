@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--WSDL - Web Services Description Language
+ é um padrão de mercado para descrever Web Services de forma a eliminar 
+ao máximo a necessidade de comunicação entre as partes envolvidas em uma 
+integração de dados. Ele normalmente é encontrado quando acrescentarmos “?wsdl” 
+ao final da URL onde o Web Service está hospedado.-->
+
+<definitions targetNamespace=<http://calc/> name="CalculadoraServerImplService">
+<types/>
+<message name="soma">
+        <part name="arg0" type="xsd:float"/>
+        <part name="arg1" type="xsd:float"/>
+</message>
+<message name="somaResponse">
+        <part name="return" type="xsd:float"/>
+</message>
+<message name="multiplicacao">
+        <part name="arg0" type="xsd:float"/>
+        <part name="arg1" type="xsd:float"/>
+</message>
+<message name="multiplicacaoResponse">
+        <part name="return" type="xsd:float"/>
+</message>
+<message name="subtracao">
+        <part name="arg0" type="xsd:float"/>
+        <part name="arg1" type="xsd:float"/>
+</message>
+<message name="subtracaoResponse">
+        <part name="return" type="xsd:float"/>
+</message>
+<message name="divisao">
+        <part name="arg0" type="xsd:float"/>
+        <part name="arg1" type="xsd:float"/>
+</message>
+<message name="divisaoResponse">
+        <part name="return" type="xsd:float"/>
+</message>
+
+<!--grupa as operações que o serviço oferece-->
+<portType name="CalculadoraServer">
+        <operation name="soma" parameterOrder="arg0 arg1">
+            <input   wsam:Action  = "http://calc/CalculadoraServer/somaRequest"  message="tns:soma"/>
+            <output  wsam:Action  = "http://calc/CalculadoraServer/somaResponse" message="tns:somaResponse"/>
+        </operation>
+        <operation name="multiplicacao" parameterOrder="arg0 arg1">
+            <input  wsam:Action = "http://calc/CalculadoraServer/multiplicacaoRequest"  message="tns:multiplicacao"/>
+            <output wsam:Action = "http://calc/CalculadoraServer/multiplicacaoResponse" message="tns:multiplicacaoResponse"/>
+        </operation>
+        <operation name="subtracao" parameterOrder="arg0 arg1">
+            <input  wsam:Action = "http://calc/CalculadoraServer/subtracaoRequest"  message="tns:subtracao"/>
+            <output wsam:Action = "http://calc/CalculadoraServer/subtracaoResponse" message="tns:subtracaoResponse"/>
+        </operation>
+        <operation name="divisao" parameterOrder="arg0 arg1">
+            <input  wsam:Action = "http://calc/CalculadoraServer/divisaoRequest"  message="tns:divisao"/>
+            <output wsam:Action = "http://calc/CalculadoraServer/divisaoResponse" message="tns:divisaoResponse"/>
+        </operation>
+</portType>
+
+<binding name="CalculadoraServerImplPortBinding" type="tns:CalculadoraServer">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+        <operation name="soma">
+<soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </output>
+        </operation>
+        <operation name="multiplicacao">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </output>
+        </operation>
+        <operation name="subtracao">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </output>
+        </operation>
+        <operation name="divisao">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal" namespace="http://calc/"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="http://calc/"/>                                       
+                             </output>
+        </operation>
+</binding>
+
+<!--(Service)Essa sessão especifica qual a localização do serviço através do atributo location. 
+No exemplo o serviço está localizado na URL http://127.0.0.1:9876/calc que é 
+chamado como o endpoint (ponto) do serviço, ou seja, onde o serviço pode ser encontrado. 
+Essa informação é importante para o cliente, pois é neste ponto que ele descobre em 
+que servidor está o serviço.-->
+<service name="CalculadoraServerImplService">
+        <port name="CalculadoraServerImplPort" binding="tns:CalculadoraServerImplPortBinding">
+            <soap:address location="http://127.0.0.1:9876/calc"/>
+        </port>
+</service>
+
+</definitions>
